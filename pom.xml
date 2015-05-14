@@ -16,7 +16,6 @@
 		<artifactId>javamoney-parent</artifactId>
 		<version>1.0</version>
 	</parent>
-	<version>1.0.1-SNAPSHOT</version>
 	<artifactId>moneta</artifactId>
 	<packaging>bundle</packaging>
 	<name>Moneta (JSR 354 RI)</name>
