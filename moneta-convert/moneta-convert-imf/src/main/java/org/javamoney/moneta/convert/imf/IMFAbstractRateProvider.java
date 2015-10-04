@@ -33,7 +33,7 @@ import org.javamoney.moneta.convert.imf.IMFRateReadingHandler.RateIMFResult;
 import org.javamoney.moneta.spi.AbstractRateProvider;
 import org.javamoney.moneta.spi.LoaderService.LoaderListener;
 
-abstract class IMFAbstractRateProvider extends AbstractRateProvider implements LoaderListener {
+public abstract class IMFAbstractRateProvider extends AbstractRateProvider implements LoaderListener {
 
 
     private static final Logger LOG = Logger.getLogger(IMFAbstractRateProvider.class.getName());
