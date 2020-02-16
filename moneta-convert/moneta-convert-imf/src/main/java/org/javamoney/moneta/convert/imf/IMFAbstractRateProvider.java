@@ -17,7 +17,6 @@ package org.javamoney.moneta.convert.imf;
 
 import java.io.InputStream;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Currency;
@@ -26,13 +25,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Predicate;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.money.CurrencyContextBuilder;
 import javax.money.CurrencyUnit;
@@ -169,26 +164,12 @@ abstract class IMFAbstractRateProvider extends AbstractRateProvider implements L
         }
     }
 
-    private ExchangeRate getExchangeRate(List<ExchangeRate> rates,final LocalDate[] dates) {
-        if (Objects.isNull(rates) ) {
-            return null;
-        }
-        if (Objects.isNull(dates)) {
-        	return rates.stream()
-                    .max(COMPARATOR_EXCHANGE_BY_LOCAL_DATE)
-                    .orElseThrow(() -> new MonetaryException("There is not more recent exchange rate to  rate on IMFRateProvider."));
-        } else {
-        	for (LocalDate localDate : dates) {
-        		Predicate<ExchangeRate> filter = rate -> rate.getContext().get(LocalDate.class).equals(localDate);
-        		Optional<ExchangeRate> exchangeRateOptional = rates.stream().filter(filter).findFirst();
-        		if(exchangeRateOptional.isPresent()) {
-        			return exchangeRateOptional.get();
-        		}
-			}
-          	String datesOnErros = Stream.of(dates).map(date -> date.format(DateTimeFormatter.ISO_LOCAL_DATE)).collect(Collectors.joining(","));
-        	throw new MonetaryException("There is not exchange on day " + datesOnErros + " to rate to  rate on IFMRateProvider.");
-        }
-    }
+    /**
+	 * @deprecated Use {@link org.javamoney.moneta.convert.imf.IMFRateReadingHandler#getExchangeRate(List<ExchangeRate>,LocalDate[])} instead
+	 */
+	private ExchangeRate getExchangeRate(List<ExchangeRate> rates,final LocalDate[] dates) {
+		return handler.getExchangeRate(rates, dates);
+	}
 
     @Override
     public String toString() {
