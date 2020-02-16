@@ -15,7 +15,6 @@
  */
 package org.javamoney.moneta.convert.internal;
 
-import org.javamoney.moneta.spi.AbstractRateProvider;
 
 /**
  * This class implements an {@link javax.money.convert.ExchangeRateProvider} that provides exchange rate with factor
@@ -24,7 +23,7 @@ import org.javamoney.moneta.spi.AbstractRateProvider;
  * @author Anatole Tresch
  * @author Werner Keil
  */
-public class IdentityRateProvider extends AbstractRateProvider {
+public class IdentityRateProvider extends SuperclassExtracted {
 
     /**
      * Constructor, also loads initial data.
