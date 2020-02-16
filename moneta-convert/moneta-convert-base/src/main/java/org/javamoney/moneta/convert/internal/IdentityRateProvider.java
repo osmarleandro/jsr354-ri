@@ -24,7 +24,7 @@ import org.javamoney.moneta.spi.AbstractRateProvider;
  * @author Anatole Tresch
  * @author Werner Keil
  */
-public class IdentityRateProvider extends AbstractRateProvider {
+public class IdentityRateProvider extends SuperclassExtracted {
 
     /**
      * Constructor, also loads initial data.

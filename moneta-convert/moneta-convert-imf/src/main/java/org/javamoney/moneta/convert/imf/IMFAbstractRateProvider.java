@@ -16,6 +16,7 @@
 package org.javamoney.moneta.convert.imf;
 
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
@@ -38,20 +39,23 @@ import javax.money.CurrencyContextBuilder;
 import javax.money.CurrencyUnit;
 import javax.money.Monetary;
 import javax.money.MonetaryException;
-import javax.money.convert.ConversionContext;
-import javax.money.convert.ConversionQuery;
-import javax.money.convert.ExchangeRate;
-import javax.money.convert.ProviderContext;
+import javax.money.convert.*;
 
 import org.javamoney.moneta.CurrencyUnitBuilder;
 import org.javamoney.moneta.convert.ExchangeRateBuilder;
 import org.javamoney.moneta.convert.imf.IMFRateReadingHandler.RateIMFResult;
 import org.javamoney.moneta.spi.AbstractRateProvider;
+import org.javamoney.moneta.spi.DefaultNumberValue;
 import org.javamoney.moneta.spi.LoaderService.LoaderListener;
 
 abstract class IMFAbstractRateProvider extends AbstractRateProvider implements LoaderListener {
 
 
+    /**
+     * The {@link ConversionContext} of this provider.
+     */
+    protected static final ProviderContext CONTEXT =
+            ProviderContextBuilder.of("IDENT", RateType.OTHER).set("providerDescription", "Identitiy Provider").build();
     private static final Logger LOG = Logger.getLogger(IMFAbstractRateProvider.class.getName());
 
     static final Comparator<ExchangeRate> COMPARATOR_EXCHANGE_BY_LOCAL_DATE = Comparator.comparing(c -> c.getContext().get(LocalDate.class));
@@ -196,4 +200,31 @@ abstract class IMFAbstractRateProvider extends AbstractRateProvider implements L
                 " context: " + context + '}';
     }
 
+    /**
+     * Check if this provider can provide a rate, which is only the case if base and term are equal.
+     *
+     * @param conversionQuery the required {@link ConversionQuery}, not {@code null}
+     * @return true, if the contained base and term currencies are known to this provider.
+     */
+    @Override
+	public boolean isAvailable(ConversionQuery conversionQuery) {
+        return conversionQuery.getBaseCurrency().getCurrencyCode()
+                .equals(conversionQuery.getCurrency().getCurrencyCode());
+    }
+
+    /*
+     * (non-Javadoc)
+	 *
+	 * @see
+	 * javax.money.convert.ExchangeRateProvider#getReversed(javax.money.convert
+	 * .ExchangeRate)
+	 */
+    @Override
+    public ExchangeRate getReversed(ExchangeRate rate) {
+        if (rate.getContext().getProviderName().equals(CONTEXT.getProviderName())) {
+            return new ExchangeRateBuilder(rate.getContext()).setTerm(rate.getBaseCurrency())
+                    .setBase(rate.getCurrency()).setFactor(new DefaultNumberValue(BigDecimal.ONE)).build();
+        }
+        return null;
+    }
 }
