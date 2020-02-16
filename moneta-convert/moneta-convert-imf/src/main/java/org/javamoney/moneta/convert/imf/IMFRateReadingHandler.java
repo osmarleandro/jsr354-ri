@@ -22,16 +22,14 @@ import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+import java.util.function.Predicate;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.money.CurrencyUnit;
+import javax.money.MonetaryException;
 import javax.money.convert.ConversionContextBuilder;
 import javax.money.convert.ExchangeRate;
 import javax.money.convert.ProviderContext;
@@ -212,6 +210,27 @@ class IMFRateReadingHandler {
 			rateType = RateType.DEFERRED;
 		}
 		return rateType;
+	}
+
+	ExchangeRate getExchangeRate(List<ExchangeRate> rates, final LocalDate[] dates) {
+		if (Objects.isNull(rates) ) {
+			return null;
+		}
+		if (Objects.isNull(dates)) {
+			return rates.stream()
+					.max(IMFAbstractRateProvider.COMPARATOR_EXCHANGE_BY_LOCAL_DATE)
+					.orElseThrow(() -> new MonetaryException("There is not more recent exchange rate to  rate on IMFRateProvider."));
+		} else {
+			for (LocalDate localDate : dates) {
+				Predicate<ExchangeRate> filter = rate -> rate.getContext().get(LocalDate.class).equals(localDate);
+				Optional<ExchangeRate> exchangeRateOptional = rates.stream().filter(filter).findFirst();
+				if(exchangeRateOptional.isPresent()) {
+					return exchangeRateOptional.get();
+				}
+			}
+			  String datesOnErros = Stream.of(dates).map(date -> date.format(DateTimeFormatter.ISO_LOCAL_DATE)).collect(Collectors.joining(","));
+			throw new MonetaryException("There is not exchange on day " + datesOnErros + " to rate to  rate on IFMRateProvider.");
+		}
 	}
 
 	class RateIMFResult {
