@@ -1,5 +1,6 @@
 package org.javamoney.moneta.convert.internal;
 
+import org.javamoney.moneta.convert.ExchangeRateBuilder;
 import org.javamoney.moneta.spi.AbstractRateProvider;
 import org.javamoney.moneta.spi.DefaultNumberValue;
 
@@ -12,6 +13,8 @@ public abstract class SuperclassExtracted extends AbstractRateProvider {
      */
     protected static final ProviderContext CONTEXT =
             ProviderContextBuilder.of("IDENT", RateType.OTHER).set("providerDescription", "Identitiy Provider").build();
+
+    private String newField = "String";
 
     public SuperclassExtracted(ProviderContext providerContext) {
         super(providerContext);
@@ -55,5 +58,13 @@ public abstract class SuperclassExtracted extends AbstractRateProvider {
                     .setBase(rate.getCurrency()).setFactor(new DefaultNumberValue(BigDecimal.ONE)).build();
         }
         return null;
+    }
+
+    public String getNewField() {
+        return newField;
+    }
+
+    public void setNewField(String newField) {
+        this.newField = newField;
     }
 }
