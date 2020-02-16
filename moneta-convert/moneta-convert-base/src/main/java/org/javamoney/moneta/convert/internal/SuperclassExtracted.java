@@ -11,7 +11,7 @@ public abstract class SuperclassExtracted extends AbstractRateProvider {
 	/**
 	 * The {@link javax.money.convert.ConversionContext} of this provider.
 	 */
-	protected static final ProviderContext CONTEXT = ProviderContextBuilder.of("IDENT", RateType.OTHER).set("providerDescription", "Identitiy Provider").build();
+	protected static final ProviderContext CONTEXT_RENAMED = ProviderContextBuilder.of("IDENT", RateType.OTHER).set("providerDescription", "Identitiy Provider").build();
 
 	public SuperclassExtracted(ProviderContext providerContext) {
 		super(providerContext);

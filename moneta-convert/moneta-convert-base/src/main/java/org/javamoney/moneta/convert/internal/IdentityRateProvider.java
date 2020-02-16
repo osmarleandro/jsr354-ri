@@ -37,7 +37,7 @@ public class IdentityRateProvider extends SuperclassExtracted {
      * Constructor, also loads initial data.
      */
     public IdentityRateProvider() {
-        super(CONTEXT);
+        super(CONTEXT_RENAMED);
     }
 
 	/**
@@ -66,7 +66,7 @@ public class IdentityRateProvider extends SuperclassExtracted {
 
 	@Override
 	public ExchangeRate getReversed(ExchangeRate rate) {
-	    if (rate.getContext().getProviderName().equals(CONTEXT.getProviderName())) {
+	    if (rate.getContext().getProviderName().equals(CONTEXT_RENAMED.getProviderName())) {
 	        return new ExchangeRateBuilder(rate.getContext()).setTerm(rate.getBaseCurrency())
 	                .setBase(rate.getCurrency()).setFactor(new DefaultNumberValue(BigDecimal.ONE)).build();
 	    }
