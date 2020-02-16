@@ -85,7 +85,7 @@ class ECBRateReadingHandler extends DefaultHandler {
                 CurrencyUnit tgtCurrency = Monetary
                         .getCurrency(attributes.getValue("currency"));
                 addRate(tgtCurrency, this.localDate, BigDecimal.valueOf(Double
-                        .parseDouble(attributes.getValue("rate"))));
+                        .parseDouble(attributes.getValue("rate"))), );
             }
         }
         super.startElement(uri, localName, qName, attributes);
@@ -93,11 +93,11 @@ class ECBRateReadingHandler extends DefaultHandler {
 
     /**
      * Method to add a currency exchange rate.
-     *
-     * @param term      the term (target) currency, mapped from EUR.
+     *  @param term      the term (target) currency, mapped from EUR.
      * @param rate      The rate.
+     * @param param
      */
-    void addRate(CurrencyUnit term, LocalDate localDate, Number rate) {
+    public void addRate(CurrencyUnit term, LocalDate localDate, Number rate, Object param) {
         RateType rateType = RateType.HISTORIC;
         ExchangeRateBuilder builder;
         if (Objects.nonNull(localDate)) {
