@@ -26,13 +26,7 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 import javax.money.NumberValue;
-import javax.money.convert.ConversionContext;
-import javax.money.convert.ConversionQuery;
-import javax.money.convert.CurrencyConversion;
-import javax.money.convert.ExchangeRate;
-import javax.money.convert.ExchangeRateProvider;
-import javax.money.convert.ProviderContext;
-import javax.money.convert.RateType;
+import javax.money.convert.*;
 
 /**
  * Abstract base class for {@link ExchangeRateProvider} implementations.
@@ -42,6 +36,11 @@ import javax.money.convert.RateType;
  */
 public abstract class AbstractRateProvider implements ExchangeRateProvider {
 
+    /**
+     * The {@link ConversionContext} of this provider.
+     */
+    protected static final ProviderContext CONTEXT =
+            ProviderContextBuilder.of("IDENT", RateType.OTHER).set("providerDescription", "Identitiy Provider").build();
     /**
      * The {@link ConversionContext} of this provider.
      */
@@ -71,8 +70,29 @@ public abstract class AbstractRateProvider implements ExchangeRateProvider {
         return context;
     }
 
+    /**
+     * Check if this provider can provide a rate, which is only the case if base and term are equal.
+     *
+     * @param conversionQuery the required {@link ConversionQuery}, not {@code null}
+     * @return true, if the contained base and term currencies are known to this provider.
+     */
     @Override
-    public abstract ExchangeRate getExchangeRate(ConversionQuery conversionQuery);
+	public boolean isAvailable(ConversionQuery conversionQuery) {
+        return conversionQuery.getBaseCurrency().getCurrencyCode()
+                .equals(conversionQuery.getCurrency().getCurrencyCode());
+    }
+
+    @Override
+	public ExchangeRate getExchangeRate(ConversionQuery conversionQuery) {
+        if (conversionQuery.getBaseCurrency().getCurrencyCode().equals(conversionQuery.getCurrency().getCurrencyCode())) {
+            ExchangeRateBuilder builder = new ExchangeRateBuilder(getContext().getProviderName(), RateType.OTHER)
+                    .setBase(conversionQuery.getBaseCurrency());
+            builder.setTerm(conversionQuery.getCurrency());
+            builder.setFactor(DefaultNumberValue.of(BigDecimal.ONE));
+            return builder.build();
+        }
+        return null;
+    }
 
     @Override
     public CurrencyConversion getCurrencyConversion(ConversionQuery conversionQuery) {
@@ -172,6 +192,22 @@ public abstract class AbstractRateProvider implements ExchangeRateProvider {
         	return new LocalDate[]{localDate};
         } else if(Objects.nonNull(query.get(LocalDate[].class))) {
         	return query.get(LocalDate[].class);
+        }
+        return null;
+    }
+
+    /*
+     * (non-Javadoc)
+	 *
+	 * @see
+	 * javax.money.convert.ExchangeRateProvider#getReversed(javax.money.convert
+	 * .ExchangeRate)
+	 */
+    @Override
+    public ExchangeRate getReversed(ExchangeRate rate) {
+        if (rate.getContext().getProviderName().equals(CONTEXT.getProviderName())) {
+            return new ExchangeRateBuilder(rate.getContext()).setTerm(rate.getBaseCurrency())
+                    .setBase(rate.getCurrency()).setFactor(new DefaultNumberValue(BigDecimal.ONE)).build();
         }
         return null;
     }
