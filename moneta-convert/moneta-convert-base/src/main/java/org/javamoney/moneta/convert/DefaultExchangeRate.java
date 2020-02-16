@@ -91,9 +91,10 @@ class DefaultExchangeRate implements ExchangeRate, Serializable, Comparable<Exch
 // TODO this should probably go to "convert" in future releases. Analyze feasability of refactoring.
 
     /**
-     * serialVersionUID.
-     */
-    private static final long serialVersionUID = 5077295306570465837L;
+	 * serialVersionUID.
+	 * @deprecated Use {@link ConversionOperators#serialVersionUID} instead
+	 */
+	private static final long serialVersionUID = ConversionOperators.serialVersionUID;
     /**
      * The base currency.
      */

@@ -53,7 +53,12 @@ import org.javamoney.moneta.function.MonetarySummaryStatistics;
  */
 public final class ConversionOperators {
 
-    private ConversionOperators() {
+    /**
+	 * serialVersionUID.
+	 */
+	static final long serialVersionUID = 5077295306570465837L;
+
+	private ConversionOperators() {
     }
 
 	/**
