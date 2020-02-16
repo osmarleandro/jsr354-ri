@@ -40,10 +40,9 @@ import org.javamoney.moneta.spi.MonetaryConfig;
  */
 public class DefaultMonetaryConversionsSingletonSpi implements MonetaryConversionsSingletonSpi {
     /**
-	 * Logger used.
-	 * @deprecated Use {@link OSGIActivator#LOG} instead
-	 */
-	private static final Logger LOG = OSGIActivator.LOG;
+     * Logger used.
+     */
+    private static final Logger LOG = Logger.getLogger(DefaultMonetaryConversionsSingletonSpi.class.getName());
 
     /**
      * The providers loaded.
@@ -103,7 +102,7 @@ public class DefaultMonetaryConversionsSingletonSpi implements MonetaryConversio
                 return getExchangeRateProvider(conversionQuery).getCurrencyConversion(conversionQuery) != null;
             }
         } catch (Exception e) {
-            OSGIActivator.LOG.log(Level.FINEST, "Error during availability check for conversion: " + conversionQuery, e);
+            LOG.log(Level.FINEST, "Error during availability check for conversion: " + conversionQuery, e);
         }
         return false;
     }
@@ -160,7 +159,7 @@ public class DefaultMonetaryConversionsSingletonSpi implements MonetaryConversio
                 if (getProviderNames().contains(item.trim())) {
                     provList.add(item);
                 } else {
-                    OSGIActivator.LOG.warning("Ignoring non existing default provider: " + item);
+                    LOG.warning("Ignoring non existing default provider: " + item);
                 }
             }
         }

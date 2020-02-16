@@ -28,10 +28,6 @@ import java.util.logging.Logger;
 public class OSGIActivator implements BundleActivator {
 
     private static final Logger LOG = Logger.getLogger(OSGIActivator.class.getName());
-	/**
-	 * Logger used.
-	 */
-	static final Logger LOG = Logger.getLogger(DefaultMonetaryConversionsSingletonSpi.class.getName());
 
     @Override
     public void start(BundleContext context) {
