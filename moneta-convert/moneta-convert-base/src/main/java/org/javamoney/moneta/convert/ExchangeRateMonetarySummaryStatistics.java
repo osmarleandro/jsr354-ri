@@ -75,17 +75,13 @@ class ExchangeRateMonetarySummaryStatistics  extends DefaultMonetarySummaryStati
 		ExchangeRateMonetarySummaryStatistics another = new ExchangeRateMonetarySummaryStatistics(
 				getCurrencyUnit(), provider);
 
-		extracted(another, currencyConversion, summary
-				.getAverage(), summary.getCount(), summary.getMax(), summary.getMin(), summary.getSum());
+		another.average = currencyConversion.apply(summary
+				.getAverage());
+		another.count = summary.getCount();
+		another.max = currencyConversion.apply(summary.getMax());
+		another.min = currencyConversion.apply(summary.getMin());
+		another.sum = currencyConversion.apply(summary.getSum());
 		return another;
-	}
-
-	private void extracted(ExchangeRateMonetarySummaryStatistics another, CurrencyConversion currencyConversion, MonetaryAmount average, long count, MonetaryAmount max, MonetaryAmount min, MonetaryAmount sum) {
-		another.average = currencyConversion.apply(average);
-		another.count = count;
-		another.max = currencyConversion.apply(max);
-		another.min = currencyConversion.apply(min);
-		another.sum = currencyConversion.apply(sum);
 	}
 
 	private boolean isDifferentCurrency(CurrencyUnit unit) {
@@ -102,7 +98,11 @@ class ExchangeRateMonetarySummaryStatistics  extends DefaultMonetarySummaryStati
 		CurrencyConversion currencyConversion = provider.getCurrencyConversion(unit);
 		ExchangeRateMonetarySummaryStatistics another = new ExchangeRateMonetarySummaryStatistics(
 				unit, provider);
-		extracted(another, currencyConversion, average, count, max, min, sum);
+		another.average = currencyConversion.apply(average);
+		another.count = count;
+		another.max = currencyConversion.apply(max);
+		another.min = currencyConversion.apply(min);
+		another.sum = currencyConversion.apply(sum);
 		return another;
 	}
 
