@@ -15,8 +15,6 @@
  */
 package org.javamoney.moneta.convert.internal;
 
-import org.javamoney.moneta.spi.AbstractRateProvider;
-
 /**
  * This class implements an {@link javax.money.convert.ExchangeRateProvider} that provides exchange rate with factor
  * one for identical base/term currencies.
@@ -26,6 +24,8 @@ import org.javamoney.moneta.spi.AbstractRateProvider;
  */
 public class IdentityRateProvider extends SuperclassExtracted {
 
+    private String newField = "String";
+
     /**
      * Constructor, also loads initial data.
      */
@@ -33,4 +33,11 @@ public class IdentityRateProvider extends SuperclassExtracted {
             super(CONTEXT);
     }
 
+    public String getNewField() {
+        return newField;
+    }
+
+    public void setNewField(String newField) {
+        this.newField = newField;
+    }
 }
