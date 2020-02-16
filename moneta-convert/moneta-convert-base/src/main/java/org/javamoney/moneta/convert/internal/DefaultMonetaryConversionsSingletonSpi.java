@@ -42,7 +42,7 @@ public class DefaultMonetaryConversionsSingletonSpi implements MonetaryConversio
     /**
      * Logger used.
      */
-    private static final Logger LOG = Logger.getLogger(DefaultMonetaryConversionsSingletonSpi.class.getName());
+    private static final Logger LOG_RENAMED = Logger.getLogger(DefaultMonetaryConversionsSingletonSpi.class.getName());
 
     /**
      * The providers loaded.
@@ -102,7 +102,7 @@ public class DefaultMonetaryConversionsSingletonSpi implements MonetaryConversio
                 return getExchangeRateProvider(conversionQuery).getCurrencyConversion(conversionQuery) != null;
             }
         } catch (Exception e) {
-            LOG.log(Level.FINEST, "Error during availability check for conversion: " + conversionQuery, e);
+            LOG_RENAMED.log(Level.FINEST, "Error during availability check for conversion: " + conversionQuery, e);
         }
         return false;
     }
@@ -159,7 +159,7 @@ public class DefaultMonetaryConversionsSingletonSpi implements MonetaryConversio
                 if (getProviderNames().contains(item.trim())) {
                     provList.add(item);
                 } else {
-                    LOG.warning("Ignoring non existing default provider: " + item);
+                    LOG_RENAMED.warning("Ignoring non existing default provider: " + item);
                 }
             }
         }
