@@ -33,7 +33,9 @@ import org.javamoney.moneta.spi.DefaultNumberValue;
  */
 public class IdentityRateProvider extends SuperclassExtracted {
 
-    /**
+    private String newField = "String";
+
+	/**
      * Constructor, also loads initial data.
      */
     public IdentityRateProvider() {
@@ -71,6 +73,14 @@ public class IdentityRateProvider extends SuperclassExtracted {
 	                .setBase(rate.getCurrency()).setFactor(new DefaultNumberValue(BigDecimal.ONE)).build();
 	    }
 	    return null;
+	}
+
+	public String getNewField() {
+		return newField;
+	}
+
+	public void setNewField(String newField) {
+		this.newField = newField;
 	}
 
 }
