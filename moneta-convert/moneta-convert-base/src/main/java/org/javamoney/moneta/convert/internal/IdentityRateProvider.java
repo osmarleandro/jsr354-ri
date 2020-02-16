@@ -30,7 +30,7 @@ public class IdentityRateProvider extends SuperclassExtracted {
      * Constructor, also loads initial data.
      */
     public IdentityRateProvider() {
-        super(CONTEXT);
+            super(CONTEXT);
     }
 
 }

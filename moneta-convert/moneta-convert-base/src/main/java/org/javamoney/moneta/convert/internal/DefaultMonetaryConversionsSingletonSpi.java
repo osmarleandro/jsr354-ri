@@ -53,13 +53,13 @@ public class DefaultMonetaryConversionsSingletonSpi implements MonetaryConversio
      * Constructors, loads the providers from the {@link javax.money.spi.Bootstrap} component.
      */
     public DefaultMonetaryConversionsSingletonSpi() {
-        reload();
+        reloadRenamed();
     }
 
     /**
      * Reloads/reinitializes the providers found.
      */
-    public void reload() {
+    public void reloadRenamed() {
         Map<String, ExchangeRateProvider> newProviders = new ConcurrentHashMap<>();
         for (ExchangeRateProvider prov : Bootstrap.getServices(ExchangeRateProvider.class)) {
             newProviders.put(prov.getContext().getProviderName(), prov);
