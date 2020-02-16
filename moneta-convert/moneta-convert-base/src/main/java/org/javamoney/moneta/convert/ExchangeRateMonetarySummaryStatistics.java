@@ -75,13 +75,17 @@ class ExchangeRateMonetarySummaryStatistics  extends DefaultMonetarySummaryStati
 		ExchangeRateMonetarySummaryStatistics another = new ExchangeRateMonetarySummaryStatistics(
 				getCurrencyUnit(), provider);
 
+		extracted(summary, another);
+		return another;
+	}
+
+	private void extracted(MonetarySummaryStatistics summary, ExchangeRateMonetarySummaryStatistics another) {
 		another.average = currencyConversion.apply(summary
 				.getAverage());
 		another.count = summary.getCount();
 		another.max = currencyConversion.apply(summary.getMax());
 		another.min = currencyConversion.apply(summary.getMin());
 		another.sum = currencyConversion.apply(summary.getSum());
-		return another;
 	}
 
 	private boolean isDifferentCurrency(CurrencyUnit unit) {
