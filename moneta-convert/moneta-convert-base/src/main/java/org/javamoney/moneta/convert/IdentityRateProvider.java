@@ -13,7 +13,7 @@
   License for the specific language governing permissions and limitations under
   the License.
  */
-package org.javamoney.moneta.convert.internal;
+package org.javamoney.moneta.convert;
 
 import java.math.BigDecimal;
 
@@ -21,7 +21,7 @@ import javax.money.convert.ConversionQuery;
 import javax.money.convert.ExchangeRate;
 import javax.money.convert.RateType;
 
-import org.javamoney.moneta.convert.ExchangeRateBuilder;
+import org.javamoney.moneta.convert.internal.SuperclassExtracted;
 import org.javamoney.moneta.spi.DefaultNumberValue;
 
 /**
