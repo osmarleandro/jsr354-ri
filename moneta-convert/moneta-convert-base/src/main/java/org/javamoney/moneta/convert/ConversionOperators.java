@@ -24,7 +24,7 @@ import javax.money.MonetaryAmount;
 import javax.money.MonetaryOperator;
 import javax.money.convert.ExchangeRateProvider;
 
-import org.javamoney.moneta.convert.ExchangeCurrencyOperator;
+import org.javamoney.moneta.convert.internal.ExchangeCurrencyOperatorRenamed;
 import org.javamoney.moneta.function.MonetarySummaryStatistics;
 
 /**
@@ -80,7 +80,7 @@ public final class ConversionOperators {
 	 * @since 1.0.1
 	 */
 	public static MonetaryOperator exchange(CurrencyUnit currencyUnit){
-		return new ExchangeCurrencyOperator(Objects.requireNonNull(currencyUnit));
+		return new ExchangeCurrencyOperatorRenamed(Objects.requireNonNull(currencyUnit));
 	}
 	
 	/**

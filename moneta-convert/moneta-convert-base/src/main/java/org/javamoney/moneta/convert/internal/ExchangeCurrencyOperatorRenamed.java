@@ -13,7 +13,7 @@
   License for the specific language governing permissions and limitations under
   the License.
  */
-package org.javamoney.moneta.convert;
+package org.javamoney.moneta.convert.internal;
 
 import java.util.Objects;
 
@@ -24,7 +24,7 @@ import javax.money.MonetaryOperator;
 /**
  * MonetaryOperator class that applies an exchange rate to an amount.
  */
-public class ExchangeCurrencyOperator implements MonetaryOperator {
+public class ExchangeCurrencyOperatorRenamed implements MonetaryOperator {
 	/** The target currency. */
 	private final CurrencyUnit currency;
 
@@ -32,7 +32,7 @@ public class ExchangeCurrencyOperator implements MonetaryOperator {
 	 * Constructor.
 	 * @param currency the target currency, not null.
      */
-	ExchangeCurrencyOperator(CurrencyUnit currency) {
+	ExchangeCurrencyOperatorRenamed(CurrencyUnit currency) {
 		this.currency = Objects.requireNonNull(currency);
 	}
 
