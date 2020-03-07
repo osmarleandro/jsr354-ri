@@ -24,6 +24,7 @@ import javax.money.MonetaryAmount;
 import javax.money.MonetaryOperator;
 
 import org.javamoney.moneta.Money;
+import org.javamoney.moneta.convert.internal.ExchangeCurrencyOperatorRenamed;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -36,7 +37,7 @@ public class ExchangeCurrencyOperatorTest {
 	@BeforeMethod
 	public void setup() {
 		real = Monetary.getCurrency("BRL");
-		operator = new ExchangeCurrencyOperator(real);
+		operator = new ExchangeCurrencyOperatorRenamed(real);
 	}
 
 	@Test
