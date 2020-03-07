@@ -13,7 +13,9 @@
   License for the specific language governing permissions and limitations under
   the License.
  */
-package org.javamoney.moneta.convert.internal;
+package org.javamoney.moneta.convert;
+
+import org.javamoney.moneta.convert.internal.SuperclassExtracted;
 
 /**
  * This class implements an {@link javax.money.convert.ExchangeRateProvider} that provides exchange rate with factor
