@@ -38,7 +38,7 @@ import org.javamoney.moneta.spi.MonetaryConfig;
  * This is the default implementation of the {@link javax.money.spi.MonetaryConversionsSingletonSpi} interface, backing
  * up the {@link javax.money.convert.MonetaryConversions} singleton.
  */
-public class DefaultMonetaryConversionsSingletonSpi implements MonetaryConversionsSingletonSpi {
+public class DefaultMonetaryConversionsSingletonSpi implements MonetaryConversionsSingletonSpi, ExtractedInterface {
     /**
      * Logger used.
      */
@@ -59,6 +59,7 @@ public class DefaultMonetaryConversionsSingletonSpi implements MonetaryConversio
     /**
      * Reloads/reinitializes the providers found.
      */
+    @Override
     public void reloadRenamed() {
         Map<String, ExchangeRateProvider> newProviders = new ConcurrentHashMap<>();
         for (ExchangeRateProvider prov : Bootstrap.getServices(ExchangeRateProvider.class)) {
